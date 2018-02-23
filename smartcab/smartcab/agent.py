@@ -1,4 +1,4 @@
-import random
+from numpy import random
 import math
 from environment import Agent, Environment
 from planner import RoutePlanner
@@ -101,11 +101,13 @@ class LearningAgent(Agent):
         # Set the agent state and default action
         self.state = state
         self.next_waypoint = self.planner.next_waypoint()
-        action = None
+        
 
         ########### 
         ## TO DO ##
         ###########
+        cab_dir=random.choice(self.valid_actions)
+        action = cab_dir if self.learning is False else random.choice(self.valid_actions,p=epsilon)
         # When not learning, choose a random action
         # When learning, choose a random action with 'epsilon' probability
         # Otherwise, choose an action with the highest Q-value for the current state
