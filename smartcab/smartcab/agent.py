@@ -106,12 +106,21 @@ class LearningAgent(Agent):
         ########### 
         ## TO DO ##
         ###########
-        cab_dir=random.choice(self.valid_actions)
-        action = cab_dir if self.learning is False else random.choice(self.valid_actions,p=epsilon)
+        random_dir=random.choice(self.valid_actions)
+        action= random_dir
+
+
         # When not learning, choose a random action
         # When learning, choose a random action with 'epsilon' probability
         # Otherwise, choose an action with the highest Q-value for the current state
         # Be sure that when choosing an action with highest Q-value that you randomly select between actions that "tie".
+                '''
+        if self.learning is False:
+            action= random_dir
+        else:
+            random.choice(self.valid_actions,p=epsilon)
+        '''
+        
         return action
 
 
