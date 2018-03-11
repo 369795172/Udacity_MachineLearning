@@ -12125,15 +12125,43 @@ Run the agent.py file after setting the flags from projects/smartcab folder inst
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong></p>
-<p>According to the previous question, I will demostrate each possible actions under most relevant features</p>
-<ul>
-<li><code>'waypoint'</code>: east,west,north,south</li>
-<li><code>'inputs['light']'</code>: green, red</li>
-<li><code>'inputs['left']'</code>:forward,left,right,none</li>
-<li><code>'inputs['oncoming']'</code>:forward,left,right,none</li>
-<li>Smartcab actions: forward,left,right,none</li>
-</ul>
-<p>There are total  $4 \times 2 \times 4 \times 4 \times 4=512$ possible values</p>
+<p>According to the previous question, I will demostrate each possible actions under most relevant features:</p>
+<table>
+<thead><tr>
+<th style="text-align:center">Features</th>
+<th style="text-align:center">Number of State</th>
+<th style="text-align:center">State</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>'waypoint'</code></td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">forward,left,right</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>'inputs['light']'</code></td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">red,green</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>'inputs['left']'</code></td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">forward,left,right,None</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>'inputs['oncoming']'</code></td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">forward,left,right,None</td>
+</tr>
+<tr>
+<td style="text-align:center">possibla actions</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">forward,left,right,None</td>
+</tr>
+</tbody>
+</table>
+<p>There are total $3 \times 2 \times 4 \times 4 \times 4=96$ possible states, and $3 \times 2 \times 4 \times 4 \times 4\times 4=384$ total combinations.</p>
 
 </div>
 </div>
@@ -12502,8 +12530,13 @@ Parameters: trial number=177, tolerance=0.001</p>
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong></p>
 <ul>
-<li><p>The optimal policy for the US right-of-way traffic law is shown in the following table:</p>
+<li><p>The optimal policy for the US right-of-way traffic law described below, and it is shown in the following table:</p>
+<ul>
+<li>if the light is red, then the agent can take no action or take a right turn. Since when red and taking right turn may cause a collision if there is a traffic from left going forward.</li>
+<li><p>if the light is green, then the agent should take every action except <code>None</code>.</p>
 <p>Four states assigned are smartcab waypoint,driving triffic light,oncoming traffic,left traffic</p>
+</li>
+</ul>
 </li>
 </ul>
 <table>
@@ -12537,18 +12570,47 @@ Parameters: trial number=177, tolerance=0.001</p>
 </tbody>
 </table>
 <ul>
-<li><p>From <code>sim_improved-learning.txt</code>, the reward are listed as following:
-  from the table, the reward policy was correct for given state, and there are too many different states to check each one, since optimal policy showing the most reward and the suboptimal policy comming the second most reward policy. The violation are about the same and punishied most.<br>
-| State| Action | Policy | Reward |
-| :------------: | :---------------: | :-------------: |
-| {'forward','red',None,None}|    None         |     optimal policy      |  1.79 |
-| {'forward','red',None,None}|    'right'         |    suboptimal policy      |  0.22  |
-| {'forward','red',None,None}|    'left'         |    violation      |  -2.10 |
-| {'forward','red',None,None}|    'forward'         |    violation      | -2.97 |</p>
-</li>
-<li><p>There are some entries not so reasonable, such as:
-  When the smartcab driving left, and the traffic light is green. Where the smartcab supposed to drive left and the rest options should be invalid, the reward for drving forward and right reward positives.</p>
-</li>
+<li>From <code>sim_improved-learning.txt</code>, the reward are listed as following:
+  from the table, the reward policy was correct for given state, and there are too many different states to check each one, since optimal policy showing the most reward and the suboptimal policy comming the second most reward policy. The violation are about the same and punishied most.  </li>
+</ul>
+<table>
+<thead><tr>
+<th style="text-align:center">State</th>
+<th style="text-align:center">Action</th>
+<th style="text-align:center">Policy</th>
+<th>Reward</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">{'forward','red',None,None}</td>
+<td style="text-align:center">None</td>
+<td style="text-align:center">optimal policy</td>
+<td>1.79</td>
+</tr>
+<tr>
+<td style="text-align:center">{'forward','red',None,None}</td>
+<td style="text-align:center">'right'</td>
+<td style="text-align:center">suboptimal policy</td>
+<td>0.22</td>
+</tr>
+<tr>
+<td style="text-align:center">{'forward','red',None,None}</td>
+<td style="text-align:center">'left'</td>
+<td style="text-align:center">violation</td>
+<td>-2.10</td>
+</tr>
+<tr>
+<td style="text-align:center">{'forward','red',None,None}</td>
+<td style="text-align:center">'forward'</td>
+<td style="text-align:center">violation</td>
+<td>-2.97</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>There are some entries not so reasonable, such as:
+  When the smartcab driving left, and the traffic light is green. Where the smartcab supposed to drive left and the rest options should be invalid, the reward for drving forward and right reward positives.</li>
 </ul>
 <table>
 <thead><tr>
@@ -12613,7 +12675,10 @@ Parameters: trial number=177, tolerance=0.001</p>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong></p>
-<p>Since the algorithm is based on every direction movement action, the overall environment will be put behind.Considering this situation, the reward point for every actions are not very accurate for the overall environment.</p>
+<ul>
+<li>Since the algorithm is based on every direction movement action, the overall environment will be put behind.Considering this situation, the reward point for every actions are not very accurate for the overall environment.</li>
+<li>This algorithm is built on a circumstances that the smart cab will know the other intersection traffic to move next in order to determine what the optimal actions. In reality, there is no way to find out what other drivers thinking.</li>
+</ul>
 
 </div>
 </div>
